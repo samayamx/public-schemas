@@ -1,0 +1,223 @@
+{
+  "$id": "https://gist.githubusercontent.com/tzkmx/0b31897ea96fb3e36f8debdc050121b9/raw/bdda2e9b636d1130e4000d6c829113d62c4bcd4c/app-navigation-tree.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "App Contents Navigation Manifest",
+  "description": "A blueprint for application navigation",
+  "$comment": "Initial author: Jesus E. Franco Martinez <jefrancomix@gmail.com>"
+  "properties": {
+    "home": {
+      "description": "First screen interactive for users (after authentication flow if required)",
+      "type": "object",
+      "properties": {
+        "children": {
+          "description": "Manifest of top level accesible tools and their children",
+          "type": "array",
+          "items": {
+            "$ref": "#/$definitions/content-node"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "children"
+      ]
+    }
+  },
+  "required": [
+    "home"
+  ],
+  "$definitions": {
+    "label": {
+      "description": "Opcional, por defecto se usa el title. Use false en caso de desear ocultarlo.",
+      "examples": [
+        "Experimentos",
+        false
+      ],
+      "oneOf": [
+        {
+          "type": "boolean",
+          "const": false
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "content-node": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Identificador único del nodo. Omita si especifica el ID y título en una sola línea. 16 bytes en grupos de 8-4-4-4-12 dígitos hexadecimales.",
+          "examples": [
+            "9403af35-4d8d-425d-8d76-a9ed6a1e1c6f"
+          ],
+          "type": "string",
+          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$"
+        },
+        "title": {
+          "description": "Identificador legible, no requiere ser único. Requerido si especifica $id en su propio campo aparte, use label: false para ocultarlo.",
+          "type": "string",
+          "examples": [
+            "Contenedor de íconos"
+          ]
+        },
+        "uri": {
+          "$ref": "#/$definitions/uri"
+        },
+        "children": {
+          "description": "nodos accesibles al desplegar este contenedor",
+          "type": "array",
+          "items": {
+            "$ref": "#/$definitions/content-node"
+          }
+        },
+        "label": {
+          "$ref": "#/$definitions/label"
+        },
+        "icon": {
+          "$ref": "#/$definitions/icon"
+        },
+        "help": {
+          "type": "string",
+          "description": "Texto o URL de ayuda a los usuarios, puede abrir un recurso en modal o visor dentro del app."
+        },
+        "sequence": {
+          "description": "Especifica la posición del ícono para acceder al recurso dentro de su contenedor.",
+          "type": "number",
+          "minimum": 1
+        },
+        "updatedAt": {
+          "description": "Informa última actualización del recurso, recomendable para seguimiento de versiones",
+          "type": "string",
+          "format": "date-time"
+        },
+        "features": {
+          "description": "capabilities o feature flags del usuario o su perfil, que debe tener para acceder al recurso",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "versionMin": {
+          "description": "Este recurso no debe mostrarse a aplicaciones con una versión menor a la indicada",
+          "type": "string"
+        },
+        "versionMax": {
+          "description": "Este recurso no debe mostrarse a aplicaciones con una versión mayor a la indicada",
+          "type": "string"
+        },
+        "events": {
+          "$ref": "#/$definitions/handleEvents"
+        },
+        "layout": {
+          "enum": ["grid", "list"]
+        }
+      },
+      "additionalProperties": false,
+      "patternProperties": {
+        "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$": {
+          "description": "Identificador binario y legible del nodo en una sola línea, omita si usa $id en campo propio",
+          "type": "string",
+          "examples": [
+            "9403af39-3da5-4ce7-af96-cd2d8c47641d: Herramientas de Venta"
+          ]
+        }
+      },
+      "dependencies": {
+        "id": {
+          "properties": {
+            "title": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "title"
+          ],
+          "patternProperties": {
+            "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$": {
+              "type": "null"
+            }
+          }
+        },
+        "children": {
+          "properties": {
+            "uri": {
+              "type": "null"
+            }
+          }
+        },
+        "layout": ["children"]
+      }
+    },
+    "uri": {
+      "type": "string",
+      "pattern": "^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?",
+      "description": "Identificador de recurso uniforme, este debe poder ser manejado por la aplicación o utilidad invocable como un navegador del dispositivo. Recurso con URI no debe tener nodos hijos, y viceversa."
+    },
+    "icon": {
+      "anyOf": [
+        {
+          "type": "string",
+          "const": "default"
+        },
+        {
+          "$ref": "#/$definitions/uri"
+        },
+        {
+          "$ref": "#/$definitions/iconObject"
+        }
+      ]
+    },
+    "iconObject": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "$ref": "#/$definitions/icon"
+        },
+        "version": {
+          "type": "number",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "url",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "handleEvents": {
+      "description": "eventos que serán registrados al acceder e interactuar con el recurso",
+      "type": "array",
+      "items": {
+        "$ref": "#/$definitions/event"
+      }
+    },
+    "event": {
+      "type": "object",
+      "properties": {
+        "eventName": {
+          "type": "string",
+          "minLength": 3,
+          "examples": [
+            "tap", "open", "close"
+          ]
+        },
+        "loggingTag": {
+          "type": "string",
+          "minLength": 3,
+          "examples": [
+            "tool.open",
+            "faq.open",
+            "faq.close"
+          ]
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": ["eventName", "loggingTag", "enabled"],
+      "additionalProperties": { "type": "string" }
+    }
+  }
+}
