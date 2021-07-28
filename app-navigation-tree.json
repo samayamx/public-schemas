@@ -1,5 +1,5 @@
 {
-  "$id": "https://gist.githubusercontent.com/tzkmx/0b31897ea96fb3e36f8debdc050121b9/raw/bdda2e9b636d1130e4000d6c829113d62c4bcd4c/app-navigation-tree.json",
+  "$id": "https://schemas.samaya.app/app-navigation-tree.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "App Contents Navigation Manifest",
   "description": "A blueprint for application navigation",
