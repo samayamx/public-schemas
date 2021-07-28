@@ -3,7 +3,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "App Contents Navigation Manifest",
   "description": "A blueprint for application navigation",
-  "$comment": "Initial author: Jesus E. Franco Martinez <jefrancomix@gmail.com>"
+  "$comment": "Initial author: Jesus E. Franco Martinez <jefrancomix@gmail.com>",
   "properties": {
     "home": {
       "description": "First screen interactive for users (after authentication flow if required)",
