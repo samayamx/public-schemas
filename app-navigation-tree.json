@@ -1,6 +1,6 @@
 {
   "$id": "https://schemas.samaya.app/app-navigation-tree.json",
-  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "App Contents Navigation Manifest",
   "description": "A blueprint for application navigation",
   "$comment": "Initial author: Jesus E. Franco Martinez <jefrancomix@gmail.com>",
