@@ -13,7 +13,7 @@
           "description": "Manifest of top level accesible tools and their children",
           "type": "array",
           "items": {
-            "$ref": "#/$definitions/content-node"
+            "$ref": "#/definitions/content-node"
           },
           "minItems": 1,
           "uniqueItems": true
@@ -27,7 +27,7 @@
   "required": [
     "home"
   ],
-  "$definitions": {
+  "definitions": {
     "label": {
       "description": "Opcional, por defecto se usa el title. Use false en caso de desear ocultarlo.",
       "examples": [
@@ -63,20 +63,20 @@
           ]
         },
         "uri": {
-          "$ref": "#/$definitions/uri"
+          "$ref": "#/definitions/uri"
         },
         "children": {
           "description": "nodos accesibles al desplegar este contenedor",
           "type": "array",
           "items": {
-            "$ref": "#/$definitions/content-node"
+            "$ref": "#/definitions/content-node"
           }
         },
         "label": {
-          "$ref": "#/$definitions/label"
+          "$ref": "#/definitions/label"
         },
         "icon": {
-          "$ref": "#/$definitions/icon"
+          "$ref": "#/definitions/icon"
         },
         "help": {
           "type": "string",
@@ -108,7 +108,7 @@
           "type": "string"
         },
         "events": {
-          "$ref": "#/$definitions/handleEvents"
+          "$ref": "#/definitions/handleEvents"
         },
         "layout": {
           "enum": ["grid", "list"]
@@ -162,10 +162,10 @@
           "const": "default"
         },
         {
-          "$ref": "#/$definitions/uri"
+          "$ref": "#/definitions/uri"
         },
         {
-          "$ref": "#/$definitions/iconObject"
+          "$ref": "#/definitions/iconObject"
         }
       ]
     },
@@ -173,7 +173,7 @@
       "type": "object",
       "properties": {
         "url": {
-          "$ref": "#/$definitions/icon"
+          "$ref": "#/definitions/icon"
         },
         "version": {
           "type": "number",
@@ -190,7 +190,7 @@
       "description": "eventos que serán registrados al acceder e interactuar con el recurso",
       "type": "array",
       "items": {
-        "$ref": "#/$definitions/event"
+        "$ref": "#/definitions/event"
       }
     },
     "event": {
